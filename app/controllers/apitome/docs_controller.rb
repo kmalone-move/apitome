@@ -29,6 +29,8 @@ class Apitome::DocsController < ActionController::Base
   end
 
   def example
+    Rails.logger.info "PATH DATA"
+    Rails.logger.info params[:path]
     @example ||= JSON.parse(file_for("#{params[:path]}.json"))
   end
 

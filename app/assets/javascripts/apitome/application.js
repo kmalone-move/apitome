@@ -1,6 +1,7 @@
 //= require apitome/jquery-2.0.3.min
 //= require apitome/bootstrap.min
 //= require apitome/highlight.min
+//= require apitome/wurl_move
 
 hljs.initHighlightingOnLoad();
 
@@ -13,4 +14,3 @@ jQuery(function(){
     }
   })
 });
-

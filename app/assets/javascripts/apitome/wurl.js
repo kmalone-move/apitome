@@ -1,11 +1,11 @@
 function Wurl(wurlForm) {
+
   this.$wurlForm = $(wurlForm);
+  console.log("this wurl form= " + this.$wurlForm);
   var self = this;
 
-  this.requestBodyMirror = mirror(this.$wurlForm.find('.post_body textarea')[0], $('.request.content_type', this.$wurlForm).val(), {})
-  this.responseBodyMirror = mirror(this.$wurlForm.find('.response.body textarea')[0], $('.response.content_type', this.$wurlForm).val(), { "readOnly": true, "lineNumbers":true});
-
-  $('.give_it_a_wurl', this.$wurlForm).click(function (event) {
+  $('#give_it_a_wurl', this.$wurlForm).click(function (event) {
+    console.log(event);
     event.preventDefault();
     self.sendWurl();
   });
@@ -17,7 +17,7 @@ function Wurl(wurlForm) {
     self.addInputs('param');
   });
 
-  $('.delete_header', this.$wurlForm).live('click', function (e) {
+  $('#delete_header', this.$wurlForm).live('click', function (e) {
     self.deleteHeader(this);
   });
 
@@ -167,20 +167,20 @@ function Wurl(wurlForm) {
         $('.response.headers', self.$wurlForm).html(jqXHR.getAllResponseHeaders());
 
         contentType = jqXHR.getResponseHeader("content-type");
-        if (contentType.indexOf('json') >= 0 && jqXHR.responseText.length > 1) {
-          self.responseBodyMirror.setValue(JSON.stringify(JSON.parse(jqXHR.responseText), undefined, 2));
-          self.responseBodyMirror.setOption('mode', 'javascript');
-          self.responseBodyMirror.setOption('json', true);
-        } else if (contentType.indexOf('javascript') >= 0) {
-          self.responseBodyMirror.setValue(jqXHR.responseText);
-          self.responseBodyMirror.setOption('mode', 'javascript');
-        } else if (contentType.indexOf('xml') >= 0) {
-          self.responseBodyMirror.setValue(jqXHR.responseText);
-          self.responseBodyMirror.setOption('mode', 'xml');
-        } else {
-          self.responseBodyMirror.setValue(jqXHR.responseText);
-          self.responseBodyMirror.setOption('mode', 'htmlmixed');
-        }
+        // if (contentType.indexOf('json') >= 0 && jqXHR.responseText.length > 1) {
+        //   self.responseBodyMirror.setValue(JSON.stringify(JSON.parse(jqXHR.responseText), undefined, 2));
+        //   self.responseBodyMirror.setOption('mode', 'javascript');
+        //   self.responseBodyMirror.setOption('json', true);
+        // } else if (contentType.indexOf('javascript') >= 0) {
+        //   self.responseBodyMirror.setValue(jqXHR.responseText);
+        //   self.responseBodyMirror.setOption('mode', 'javascript');
+        // } else if (contentType.indexOf('xml') >= 0) {
+        //   self.responseBodyMirror.setValue(jqXHR.responseText);
+        //   self.responseBodyMirror.setOption('mode', 'xml');
+        // } else {
+        //   self.responseBodyMirror.setValue(jqXHR.responseText);
+        //   self.responseBodyMirror.setOption('mode', 'htmlmixed');
+        // }
         $('.response', self.$wurlForm).effect("highlight", {}, 3000);
         $('html,body').animate({ scrollTop:$('a.response_anchor', self.$wurlForm).offset().top }, { duration:'slow', easing:'swing'});
       }
@@ -190,6 +190,8 @@ function Wurl(wurlForm) {
 
 $(function () {
   $('.wurl_form').each(function (index, wurlForm) {
+    console.log("initing form");
+    console.log(wurlForm);
     wurl = new Wurl(wurlForm);
   });
 
