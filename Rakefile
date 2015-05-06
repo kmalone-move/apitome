@@ -32,6 +32,7 @@ namespace :assets do
 
     asset = env.find_asset('apitome/application.js')
     asset.write_to(root.join('javascripts/apitome', 'bundle.js'))
+    asset.write_to(root.join('javascripts/apitome', 'wurl_move.js'))
   end
 
   task :stylesheets => :environment do
