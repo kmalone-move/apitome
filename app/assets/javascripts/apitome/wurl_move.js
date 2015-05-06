@@ -1,6 +1,6 @@
 function testCall(form_data) {
   alert('TEsting');
-  event.preventDefault();
+
   var form = $(form_data);
 
   console.log(form);
@@ -21,7 +21,6 @@ function testCall(form_data) {
 };
 
 function callService(){
-  event.preventDefault();
   $.ajax({
     beforeSend:function (req) {
       $(".header_pair:visible").each(function (i, element) {
