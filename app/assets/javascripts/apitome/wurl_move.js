@@ -20,7 +20,8 @@ function testCall(form_data) {
   callService();
 };
 
-function callService(){
+function callService(event){
+  event.preventDefault();
   $.ajax({
     beforeSend:function (req) {
       $(".header_pair:visible").each(function (i, element) {
