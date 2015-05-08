@@ -12,15 +12,15 @@
             <label class="col-sm-2 control-label">
               URL
             </label>
-            <select id="wurl_request_method" name="wurl[request_method]">
-              <option value="POST" selected="true">POST</option>
+            <select class="wurl_request_method" name="wurl[request_method]">
+              <option value="<%= request['request_method'] %>" selected="true"><%= request['request_method'] %></option>
               <option value="GET">GET</option>
               <option value="POST">POST</option>
               <option value="PUT">PUT</option>
               <option value="DELETE">DELETE</option>
               <option value="HEAD">HEAD</option>
             </select>
-            <input id="wurl_request_url" name="wurl[request_url]" value="<%= request['request_path'] %>">
+            <input class="wurl_request_url" name="wurl[request_url]" value="<%= request['request_path'] %>">
           </div>
         </div>
 
@@ -30,49 +30,39 @@
           <input id="wurl_basic_auth_password" name="wurl[basic_auth_password]" placeholder="password">
         </div>
 
-        <div class="form-group">
+        <div class="form-group field-group">
           <label class="col-sm-2 control-label">
-            <button class="btn trash_headers btn-small btn-danger" title="trash all headers"><i class="icon-trash icon-white">-</button></a>
-            <button class="btn add_header btn-small btn-inverse" title="add header"><i class="icon-plus icon-white">+</button></a>
+            <a class="btn trash_fields btn-sm btn-danger" title="trash all headers"><i class="icon-trash icon-white">-</i></a>
+            <a class="btn add_field btn-sm btn-inverse" style="background:#DDD;color:#333;" title="add header"><i class="icon-plus icon-white">+</i></a>
             <span class="text">Headers</span>
           </label>
 
-          <div class="headers form-group">
-            <div class="header_pair" style="display:none">
-              <input class="key ui-autocomplete-input" disabled="disabled" id="header_keys_" name="header_keys[]" type="text" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
-              <input class="value" disabled="disabled" id="header_values_" name="header_values[]" type="text">
-              <button class="btn delete_header btn-small btn-danger" title="delete header"><i class="icon-remove icon-white">X</i></button>
-            </div>
-
-            <div id="header_data_1" class="header_pair">
-              <input class="key ui-autocomplete-input" id="header_keys_1" name="header_keys[]" type="text" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true" value="Http-Accept">
-              <input class="value" id="header_values_1" name="header_values[]" type="text" value="application/json">
-              <button id="delete_header" class="btn delete_header btn-small btn-danger" title="delete header" onclick="removeHeader(this)"><i class="icon-remove icon-white">X</i></button>
-            </div>
-            <div id="header_data_2" class="header_pair">
-              <input class="key ui-autocomplete-input" id="header_keys_" name="header_keys[]" type="text" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true" value="Content-Type">
-              <input class="value" id="header_values_" name="header_values[]" type="text" value="application/json">
-              <button class="btn delete_header btn-small btn-danger" title="delete header"><i class="icon-remove icon-white">X</i></button>
-            </div>
-
+          <div class="col-sm-10 headers form-group fields">
+            <% request["request_headers"].to_h.each do |k, v| %>
+              <div class="header_pair">
+                <input class="key ui-autocomplete-input" name="header_keys[]" type="text" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true" value="<%= k %>">
+                <input class="value" name="header_values[]" type="text" value="<%= v %>">
+                <a class="btn delete_field btn-sm btn-danger" title="delete header"><i class="icon-remove icon-white">X</i></a>
+              </div>
+            <% end %>
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group field-group">
           <label class="col-sm-2 control-label">
-            <button class="btn trash_queries btn-small btn-danger" title="trash all parameters"><i class="icon-trash icon-white">-</i></button>
-            <button class="btn add_param btn-small btn-inverse" title="add parameter" onclick="addParam(this)"><i class="icon-plus icon-white">+</i></button>
+            <a class="btn trash_fields btn-sm btn-danger" title="trash all parameters"><i class="icon-trash icon-white">-</i></a>
+            <a class="btn add_field btn-sm btn-inverse" style="background:#DDD;color:#333;" title="add parameter"><i class="icon-plus icon-white">+</i></a>
             <span>Query</span>
           </label>
 
-          <div id="params_container" class="params controls">
-            <div class="param_pair">
-              <input class="key" id="param_keys_" name="param_keys[]" type="text">
-              <input class="value" id="param_values_" name="param_values[]" type="text">
-              <a class="btn delete_param btn-small btn-danger" title="delete parameter"><i class="icon-remove icon-white">X</i></a>
-            </div>
-
-
+          <div class="col-sm-10 params form-group fields">
+            <% request["request_query_parameters"].to_h.each do |k, v| %>
+              <div class="param_pair">
+                <input class="key" name="param_keys[]" type="text" value="<%= k %>">
+                <input class="value" name="param_values[]" type="text" value="<%= v %>">
+                <a class="btn delete_field btn-sm btn-danger" title="delete parameter"><i class="icon-remove icon-white">X</i></a>
+              </div>
+            <% end %>
           </div>
         </div>
         <div class="control-group">
@@ -81,42 +71,27 @@
           </label>
 
           <div class="post_body controls">
-            <textarea class="prettyprint" id="wurl_request_body" name="wurl[request_body]" rows="50" cols="80" class=""><%= formatted_body(request['request_body'], request['request_content_type']) %>
-
-            </textarea>
+            <textarea class="prettyprint" name="wurl[request_body]" rows="50" cols="80" class=""><%= formatted_body(request['request_body'], request['request_content_type']) %></textarea>
           </div>
         </div>
         <div>
           <div>
-            <input class="clear_fields btn" id="clear_fields" type="button" value="Clear">
-            <button id="give_it_a_wurl" class="give_it_a_wurl btn" onclick="callService()">"Give it a Wurl!"</button>
+            <input class="clear_fields btn" type="button" value="Clear">
+            <button class="give_it_a_wurl btn" type="submit">"Give it a Wurl!"</button>
           </div>
         </div>
       </form>
 
       <h3><a class="response_anchor"></a>Response</h3>
       <h4>Headers</h4>
-      <pre class="response headers" style="">X-Runtime: 0.032876
-Date: Wed, 11 Mar 2015 20:07:01 GMT
-Server: Apache/2.2.15 (CentOS)
-X-Powered-By: Phusion Passenger (mod_rails/mod_rack) 3.0.19
-ETag: "6d591f4142ffd8bbb681107a8e7a9d8b"
-Content-Type: application/json; charset=utf-8
-Status: 200
-Cache-Control: max-age=0, private, must-revalidate
-Connection: close
-Content-Length: 337
-X-Request-Id: d2cda03a1abfb287b4589552311567c2
-X-UA-Compatible: IE=Edge
-</pre>
+      <pre class="response" style=""><code class="headers_output http"><%= request["response_headers"].map { |k,v| "#{k}: #{v}" }.join("\n") %></code></pre>
 
       <h4>Status</h4>
-      <pre class="response status" style="">200 OK</pre>
+      <pre class="response status_output" style="">200 OK</pre>
 
       <section class="body">
         <h4>Body</h4>
-        <pre><code id="code_output" class="prettyprint">Run Wurl</code></pre>
+        <pre><code class="code_output prettyprint">Run Wurl</code></pre>
       </section>
 
-      <!-- <div class="response body" style=""><textarea style="display: none;">{"meta":{"build":"20130321229p","total_count":1},"alert_delivery":{"alert_detail":"free text","change_type":"new_listing","created_at":"2015-03-09T22:44:23Z","listing_id":"9999","listing_type":"for_sale","member_id":"9999","property_id":"9999","source":"saved_search","updated_at":"2015-03-09T22:44:23Z","id":"54fe22475cca6d057600001c"}}</textarea><div class="CodeMirror"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4.796875px; left: 29.796875px;"><textarea style="position: absolute; padding: 0; width: 1px; height: 1em" wrap="off" autocorrect="off" autocapitalize="off"></textarea></div><div class="CodeMirror-scroll cm-s-default" tabindex="-1"><div style="position: relative; height: 280px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-gutter" style="height: 280px;"><div class="CodeMirror-gutter-text"><pre>1</pre><pre>2</pre><pre>3</pre><pre>4</pre><pre>5</pre><pre>6</pre><pre>7</pre><pre>8</pre><pre>9</pre><pre>10</pre><pre>11</pre><pre>12</pre><pre>13</pre><pre>14</pre><pre>15</pre><pre>16</pre><pre>17</pre><pre>18</pre></div></div><div class="CodeMirror-lines"><div style="position: relative; z-index: 0; outline: none; margin-left: 25px;"><div style="position: absolute; width: 100%; height: 0; overflow: hidden; visibility: hidden;"><pre><span>    "created_at": "2015-03-11T20:07:01Z",</span></pre></div><pre class="CodeMirror-cursor" style="top: 0px; left: 0px;">&nbsp;</pre><div style="position: relative; z-index: -1; display: none;"></div><div><pre>{</pre><pre>  <span class="cm-string">"meta"</span>: {</pre><pre>    <span class="cm-string">"build"</span>: <span class="cm-string">"20130321229p"</span>,</pre><pre>    <span class="cm-string">"total_count"</span>: <span class="cm-number">4</span></pre><pre>  },</pre><pre>  <span class="cm-string">"alert_delivery"</span>: {</pre><pre>    <span class="cm-string">"alert_detail"</span>: <span class="cm-string">"free text"</span>,</pre><pre>    <span class="cm-string">"change_type"</span>: <span class="cm-string">"new_listing"</span>,</pre><pre>    <span class="cm-string">"created_at"</span>: <span class="cm-string">"2015-03-11T20:07:01Z"</span>,</pre><pre>    <span class="cm-string">"listing_id"</span>: <span class="cm-string">"9999"</span>,</pre><pre>    <span class="cm-string">"listing_type"</span>: <span class="cm-string">"for_sale"</span>,</pre><pre>    <span class="cm-string">"member_id"</span>: <span class="cm-string">"9999"</span>,</pre><pre>    <span class="cm-string">"property_id"</span>: <span class="cm-string">"9999"</span>,</pre><pre>    <span class="cm-string">"source"</span>: <span class="cm-string">"saved_search"</span>,</pre><pre>    <span class="cm-string">"updated_at"</span>: <span class="cm-string">"2015-03-11T20:07:01Z"</span>,</pre><pre>    <span class="cm-string">"id"</span>: <span class="cm-string">"5500a0655cca6d5d1b000003"</span></pre><pre>  }</pre><pre>}</pre></div></div></div></div></div></div></div></div> -->
     </div>

@@ -11,12 +11,10 @@
       <%= render partial: 'apitome/docs/headers',  locals: {request: request, index: index, headers: request['request_headers']} %>
       <%= render partial: 'apitome/docs/query',    locals: {request: request, index: index} unless request['request_query_parameters'].empty? %>
 
-      <div><a onclick="$('#request_body').hide()">hide</a> | <a onclick="$('#request_body').show()">show</a></div>
       <div id="request_body">
         <%= render partial: 'apitome/docs/body',     locals: {request: request, index: index, body: request['request_body'], type: request['request_content_type']} if request['request_body'] %>
       </div>
 
-      <div><a onclick="$('#request_curl').hide()">hide</a> | <a onclick="$('#request_curl').show()">show</a></div>
       <div id="request_curl">
         <%= render partial: 'apitome/docs/curl',     locals: {request: request, index: index} if request['curl'] %>
       </div>
@@ -33,11 +31,10 @@
       <%= render partial: 'apitome/docs/status',   locals: {request: request, index: index} %>
       <%= render partial: 'apitome/docs/headers',  locals: {request: request, index: index, headers: request['response_headers']} %>
 
-      <div><a onclick="$('#response_body').hide()">hide</a> | <a onclick="$('#response_body').show()">show</a></div>
       <div id="response_body">
         <%= render partial: 'apitome/docs/body',     locals: {request: request, index: index, body: request['response_body'], type: request['response_content_type']} if request['response_body'] %>
       </div>
-      
+
     </div>
   </div>
 <% end %>
