@@ -44,7 +44,7 @@ $( document ).ready(function() {
       complete:function (jqXHR) {
         formEl.parent().find('.headers_output').html(jqXHR.getAllResponseHeaders());
         formEl.parent().find('.status_output').html(jqXHR.status + ' ' + jqXHR.statusText);
-        formEl.parent().find('.code_output').html(objToStr(jqXHR.responseJSON));
+        formEl.parent().find('.code_output').html(jqXHR.responseText);
         console.log(jqXHR.responseText);
         debugger;
       }
@@ -101,15 +101,15 @@ $( document ).ready(function() {
     return toReturn.join("&");
   };
 
-  function objToStr (obj) {
-    var str = '';
-    for (var k in obj) {
-        if (obj.hasOwnProperty(k)) {
-            str += k + ': ' + obj[k] + '\n';
-        }
-    }
-    return str;
-}
+  // function objToStr (obj) {
+  //   var str = '';
+  //   for (var k in obj) {
+  //       if (obj.hasOwnProperty(k)) {
+  //           str += k + ': ' + obj[k] + '\n';
+  //       }
+  //   }
+  //   return str;
+  // }
 
   // function addParam() {
   //   event.preventDefault();
