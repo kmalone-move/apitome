@@ -34,11 +34,12 @@ $( document ).ready(function() {
         formEl.find(".header_pair").each(function (i, element) {
           headerKey = $(element).find('input.key').val();
           headerValue = $(element).find('input.value').val();
+          // console.log(headerKey + ' ' + headerValue);
           req.setRequestHeader(headerKey, headerValue);
         });
         //req.setRequestHeader('Authorization', self.makeBasicAuth());
       },
-      type: formEl.find('#wurl_request_method').val(),
+      type: formEl.find('.wurl_request_method').val(),
       url: getUrl(formEl),
       data: getFormData(formEl),
       complete:function (jqXHR) {
@@ -46,7 +47,7 @@ $( document ).ready(function() {
         formEl.parent().find('.status_output').html(jqXHR.status + ' ' + jqXHR.statusText);
         formEl.parent().find('.code_output').html(jqXHR.responseText);
         console.log(jqXHR.responseText);
-        debugger;
+        // debugger;
       }
     });
   });
@@ -85,7 +86,7 @@ $( document ).ready(function() {
   }
 
   function getFormData(formEl) {
-    data = formEl.find('#wurl_request_body').val();
+    data = formEl.find('.wurl_request_body').val();
     return data;
   };
 
