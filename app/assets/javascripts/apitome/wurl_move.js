@@ -78,8 +78,9 @@ $( document ).ready(function() {
     var url = formEl.find('.wurl_request_url').val();
     var method = formEl.find('.wurl_request_method').val();
     var params = queryParams(formEl);
-    if ($.inArray(method, ["PUT", "POST", "DELETE"]) > -1 && params.length) {
-      url += "?" + params;
+    if ($.inArray(method, ["GET", "PUT", "POST", "DELETE"]) > -1 && params.length) {
+      url.indexOf('?') > -1 ? url += '?' : url += '&'
+      url += params;
     }
     console.log(url);
     return url[0] == '/' ? url : '/' + url;
