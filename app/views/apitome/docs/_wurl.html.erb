@@ -20,7 +20,7 @@
               <option value="DELETE">DELETE</option>
               <option value="HEAD">HEAD</option>
             </select>
-            <input class="wurl_request_url" name="wurl[request_url]" value="<%= request['request_path'] %>">
+            <input class="wurl_request_url" name="wurl[request_url]" value="<%= request['request_path'].split('?').first %>">
           </div>
         </div>
 
