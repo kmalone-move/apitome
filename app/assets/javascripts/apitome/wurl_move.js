@@ -79,7 +79,7 @@ $( document ).ready(function() {
     var method = formEl.find('.wurl_request_method').val();
     var params = queryParams(formEl);
     if ($.inArray(method, ["GET", "PUT", "POST", "DELETE"]) > -1 && params.length) {
-      url.indexOf('?') > -1 ? url += '?' : url += '&'
+      url.indexOf('?') > -1 ? url += '&' : url += '?'
       url += params;
     }
     console.log(url);
