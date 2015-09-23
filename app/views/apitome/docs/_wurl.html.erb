@@ -38,7 +38,7 @@
           </label>
 
           <div class="col-sm-10 headers form-group fields">
-            <% request["request_headers"].to_h.each do |k, v| %>
+            <% request["request_headers"].to_hash.each do |k, v| %>
               <div class="header_pair">
                 <input class="key ui-autocomplete-input" name="header_keys[]" type="text" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true" value="<%= k %>">
                 <input class="value" name="header_values[]" type="text" value="<%= v %>">
@@ -56,7 +56,7 @@
           </label>
 
           <div class="col-sm-10 params form-group fields">
-            <% request["request_query_parameters"].to_h.each do |k, v| %>
+            <% request["request_query_parameters"].to_hash.each do |k, v| %>
               <div class="param_pair">
                 <input class="key" name="param_keys[]" type="text" value="<%= k %>">
                 <input class="value" name="param_values[]" type="text" value="<%= v %>">
@@ -71,7 +71,7 @@
           </label>
 
           <div class="post_body controls">
-            <textarea class="wurl_request_body prettyprint" name="wurl[request_body]" rows="50" cols="80" class=""><%= formatted_body(request['request_body'], request['request_content_type']) %></textarea>
+            <textarea class="wurl_request_body prettyprint" name="wurl[request_body]" rows="40" style="width:100%;" class=""><%= formatted_body(request['request_body'], request['request_content_type']) %></textarea>
           </div>
         </div>
         <div>

@@ -2,7 +2,7 @@ class Apitome::DocsController < ActionController::Base
 
   layout Apitome.configuration.layout
 
-  helper_method :resources, :example, :formatted_body, :param_headers, :param_extras, :formatted_readme, :set_example, :id_for, :rendered_markdown
+  helper_method :resources, :example, :formatted_body, :param_headers, :param_extras, :formatted_readme, :set_example, :id_for, :rendered_markdown, :valid_json?, :error_info
 
   def index
   end
@@ -22,6 +22,19 @@ class Apitome::DocsController < ActionController::Base
     file = Apitome.configuration.root.join(Apitome.configuration.doc_path, file)
     raise Apitome::FileNotFound.new, "Unable to find #{file}" unless File.exists?(file)
     File.read(file)
+  end
+
+  def valid_json?(explanation)
+    JSON.parse(explanation)
+    true
+  rescue
+    false
+  end
+
+  def error_info(explanation)
+    error_hash = JSON.parse(explanation)
+    Rails.logger.debug error_hash['errors']
+    error_hash['errors']
   end
 
   def resources
