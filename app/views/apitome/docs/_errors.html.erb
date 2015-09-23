@@ -1,0 +1,17 @@
+<section class="params">
+  <h4>Errors <span class="toggle_view" style="font-size:12px;">(<a>hide</a><a style="display:none;">show</a>)</span></h4>
+  <pre class="table-responsive" style="padding:0px;word-break:normal;background:none;border:none;">
+    <table class="table table-bordered" style="margin: -20px 0px -20px 0px;">
+      <tr>
+        <th>Message</th>
+        <th>Description</th>
+      </tr>
+      <% errors.each do |error| %>
+        <tr>
+          <td class="name" style="padding:0px;"><pre style="word-break:normal;"><code class='body'><%= JSON.pretty_generate(error['message']) %></code></pre></td>
+          <td class="description"><%= error['description'] %></td>
+        </tr>
+      <% end %>
+    </table>
+  </pre>
+</section>

@@ -39,14 +39,17 @@ $( document ).ready(function() {
           req.setRequestHeader(headerKey, headerValue);
         });
         //req.setRequestHeader('Authorization', self.makeBasicAuth());
+        formEl.parent().find('.headers_output').animate({ opacity: 0.1 }, 250);
+        formEl.parent().find('.status_output').animate({ opacity: 0.2 }, 250);
+        formEl.parent().find('.code_output').animate({ opacity: 0.1 }, 250);
       },
       type: formEl.find('.wurl_request_method').val(),
       url: getUrl(formEl),
       data: getFormData(formEl),
       complete:function (jqXHR) {
-        formEl.parent().find('.headers_output').html(jqXHR.getAllResponseHeaders());
-        formEl.parent().find('.status_output').html(jqXHR.status + ' ' + jqXHR.statusText);
-        formEl.parent().find('.code_output').html(jqXHR.responseText);
+        formEl.parent().find('.headers_output').html(jqXHR.getAllResponseHeaders()).animate({ opacity: 1 }, 750);
+        formEl.parent().find('.status_output').html(jqXHR.status + ' ' + jqXHR.statusText).animate({ opacity: 1 }, 750);
+        formEl.parent().find('.code_output').html(JSON.stringify(JSON.parse(jqXHR.responseText), null, '  ')).animate({ opacity: 1 }, 750);
         console.log(jqXHR.responseText);
         // debugger;
       }
