@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 $( document ).ready(function() {
   // function testCall(form_data) {
@@ -19,6 +20,28 @@ $( document ).ready(function() {
   //   callService();
   // };
 
+=======
+$( document ).ready(function() {
+  // function testCall(form_data) {
+  //   alert('TEsting');
+  //   event.preventDefault();
+
+  //   var form = $(form_data);
+  //   console.log(form);
+  //
+  //   data = queryParams();
+  //   console.log(data);
+  //
+  //   data = getUrl();
+  //   console.log(data);
+  //
+  //   data = getFormData();
+  //   console.log(data);
+  //
+  //   callService();
+  // };
+
+>>>>>>> 53cec13623ff9f9f7ffb0d71e856826e8baa8fcb
   $('span.toggle_view').click(function (event) {
     event.preventDefault();
     var linkEl = $(event.currentTarget).parent().parent();
